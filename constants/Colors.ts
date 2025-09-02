@@ -10,8 +10,8 @@ const darkGray = '#424242';
 
 export const Colors = {
   light: {
-    text: '#11181C',
-    background: '#FFFFFF',
+    text: '#FFFFFF',
+    background: '#171B1C',
     tint: primaryOrange,
     icon: '#687076',
     tabIconDefault: '#B0B0B0',
@@ -28,7 +28,7 @@ export const Colors = {
   },
   dark: {
     text: '#FFFFFF',
-    background: '#121212',
+    background: '#171B1C',
     tint: primaryOrange,
     icon: '#9BA1A6',
     tabIconDefault: '#666666',
