@@ -1,9 +1,10 @@
 import { Colors } from '@/constants/Colors';
 import { useColorScheme } from '@/hooks/useColorScheme';
-import { Ionicons, MaterialIcons } from '@expo/vector-icons';
+import { Ionicons } from '@expo/vector-icons';
 import React from 'react';
 import {
   Dimensions,
+  Image,
   SafeAreaView,
   ScrollView,
   StyleSheet,
@@ -116,22 +117,22 @@ export default function HomeScreen() {
 
   return (
     <SafeAreaView style={[styles.container, { backgroundColor: colors.background }]}>
-      <ScrollView 
+      <ScrollView
         showsVerticalScrollIndicator={false}
         contentContainerStyle={{ paddingTop: 30, paddingBottom: 120 }} // Add top padding for status bar spacing
       >
         {/* Promotional Banner */}
+        {/* Promotional Banner */}
         <TouchableOpacity style={[styles.banner, { backgroundColor: colors.primary }]}>
-          <View style={styles.bannerContent}>
-            <View style={styles.bannerText}>
-              <Text style={styles.bannerTitle}>🎮 Gaming Sale!</Text>
-              <Text style={styles.bannerSubtitle}>Up to 50% OFF on all game cards</Text>
-            </View>
-            <View style={styles.bannerIcon}>
-              <MaterialIcons name="local-fire-department" size={40} color="white" />
-            </View>
-          </View>
+          <Image
+            source={{
+              uri: 'https://cdn.builder.io/api/v1/image/assets%2Fe12b532e063c4412a1a4def250f89020%2Fd4d3251bcf9f4f1a93b2ce1b24a4b4ff'
+            }}
+            style={styles.bannerImage}
+            resizeMode="cover"
+          />
         </TouchableOpacity>
+
 
         {/* Search Bar */}
         <View style={[styles.searchContainer, { backgroundColor: colors.surface }]}>
@@ -227,33 +228,16 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   banner: {
-    marginHorizontal: 20,
-    borderRadius: 16,
-    overflow: 'hidden',
-    marginBottom: 20,
-  },
-  bannerContent: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    padding: 20,
-  },
-  bannerText: {
-    flex: 1,
-  },
-  bannerTitle: {
-    color: 'white',
-    fontSize: 20,
-    fontWeight: 'bold',
-    marginBottom: 4,
-  },
-  bannerSubtitle: {
-    color: 'white',
-    fontSize: 14,
-    opacity: 0.9,
-  },
-  bannerIcon: {
-    marginLeft: 16,
-  },
+  marginHorizontal: 20,
+  borderRadius: 16,
+  overflow: 'hidden',
+  marginBottom: 20,
+},
+bannerImage: {
+  width: '100%',
+  height: 160,
+},
+
   searchContainer: {
     flexDirection: 'row',
     alignItems: 'center',

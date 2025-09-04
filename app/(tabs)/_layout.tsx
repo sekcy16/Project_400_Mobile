@@ -20,7 +20,7 @@ export default function TabLayout() {
         tabBarStyle: Platform.select({
           ios: {
             position: 'absolute',
-            backgroundColor: colors.background,
+            backgroundColor: '#30383B',
             borderTopWidth: 0,
             bottom: 30,
             alignSelf: 'center',
@@ -30,16 +30,10 @@ export default function TabLayout() {
             borderRadius: 30, 
             paddingTop: 8,
             paddingBottom: 8,
-            // White drop shadow effect that extends below
-            shadowOpacity: 0.4,
-            shadowOffset: { width: 0, height: 10 },
-            shadowRadius: 25,
-            shadowColor: '#FFFFFF',
-            elevation: 8, 
           },
           default: {
             position: 'absolute',
-            backgroundColor: colors.background,
+            backgroundColor: '#30383B',
             borderTopWidth: 0,
             bottom: 30, 
             alignSelf: 'center',
@@ -49,12 +43,6 @@ export default function TabLayout() {
             borderRadius: 30, 
             paddingTop: 10,
             paddingBottom: 8,
-            // White drop shadow effect that extends below
-            shadowOpacity: 100,
-            shadowOffset: { width: 0, height: 10 },
-            shadowRadius: 25,
-            shadowColor: '#888686ff',
-            elevation: 8, // Android shadow
           },
         }),
       }}>
@@ -72,12 +60,12 @@ export default function TabLayout() {
         }}
       />
       <Tabs.Screen
-        name="notifications"
+        name="Apps"
         options={{
-          title: 'Notifications',
+          title: 'Apps',
           tabBarIcon: ({ color, focused }) => (
             <Ionicons 
-              name={focused ? 'notifications' : 'notifications-outline'} 
+              name={focused ? 'apps' : 'apps-outline'} 
               size={24} 
               color={color} 
             />

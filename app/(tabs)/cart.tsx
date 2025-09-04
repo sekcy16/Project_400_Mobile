@@ -84,6 +84,7 @@ const styles = StyleSheet.create({
     flex: 1,
     paddingHorizontal: 20,
     paddingTop: 20,
+    paddingBottom: 120, // เพิ่ม padding ด้านล่างเพื่อไม่ให้ Nav Bar ทับ
   },
   title: {
     fontSize: 24,
