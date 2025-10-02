@@ -50,7 +50,7 @@ const specialDeals: DealItem[] = [
     price: '$9.99',
     originalPrice: '$14.99',
     discount: '33% OFF',
-    image: '🎮',
+    image: 'https://cdn.builder.io/api/v1/image/assets%2Fe12b532e063c4412a1a4def250f89020%2F635793a0d06e46e1bcbeed120aa23adf',
   },
   {
     id: '2',
@@ -58,7 +58,7 @@ const specialDeals: DealItem[] = [
     price: '$19.99',
     originalPrice: '$24.99',
     discount: '20% OFF',
-    image: '💳',
+    image: 'https://cdn.builder.io/api/v1/image/assets%2Fe12b532e063c4412a1a4def250f89020%2F635793a0d06e46e1bcbeed120aa23adf',
   },
   {
     id: '3',
@@ -66,7 +66,7 @@ const specialDeals: DealItem[] = [
     price: '$24.99',
     originalPrice: '$29.99',
     discount: '17% OFF',
-    image: '🎁',
+    image: 'https://cdn.builder.io/api/v1/image/assets%2Fe12b532e063c4412a1a4def250f89020%2F635793a0d06e46e1bcbeed120aa23adf',
   },
 ];
 
@@ -92,7 +92,15 @@ export default function HomeScreen() {
   const DealCard = ({ item }: { item: DealItem }) => (
     <TouchableOpacity style={[styles.dealCard, { backgroundColor: colors.surface }]}>
       <View style={styles.dealImageContainer}>
-        <Text style={styles.dealImage}>{item.image}</Text>
+        {item.image.startsWith('http') ? (
+          <Image
+            source={{ uri: item.image }}
+            style={styles.dealImageReal}
+            resizeMode="cover"
+          />
+        ) : (
+          <Text style={styles.dealImage}>{item.image}</Text>
+        )}
         {item.discount && (
           <View style={[styles.discountBadge, { backgroundColor: colors.primary }]}>
             <Text style={styles.discountText}>{item.discount}</Text>
@@ -121,7 +129,6 @@ export default function HomeScreen() {
         showsVerticalScrollIndicator={false}
         contentContainerStyle={{ paddingTop: 30, paddingBottom: 120 }} // Add top padding for status bar spacing
       >
-        {/* Promotional Banner */}
         {/* Promotional Banner */}
         <TouchableOpacity style={[styles.banner, { backgroundColor: colors.primary }]}>
           <Image
@@ -228,11 +235,19 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   banner: {
-  marginHorizontal: 20,
-  borderRadius: 16,
-  overflow: 'hidden',
-  marginBottom: 20,
-},
+    marginHorizontal: 20,
+    borderRadius: 16,
+    overflow: 'hidden',
+    marginBottom: 20,
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 4,
+    },
+    shadowOpacity: 0.15,
+    shadowRadius: 8,
+    elevation: 6,
+  },
 bannerImage: {
   width: '100%',
   height: 160,
@@ -249,11 +264,13 @@ bannerImage: {
     shadowColor: '#000',
     shadowOffset: {
       width: 0,
-      height: 2,
+      height: 4,
     },
     shadowOpacity: 0.1,
-    shadowRadius: 4,
-    elevation: 3,
+    shadowRadius: 8,
+    elevation: 6,
+    borderWidth: 1,
+    borderColor: 'rgba(0,0,0,0.05)',
   },
   searchInput: {
     flex: 1,
@@ -315,20 +332,28 @@ bannerImage: {
     shadowColor: '#000',
     shadowOffset: {
       width: 0,
-      height: 2,
+      height: 4,
     },
-    shadowOpacity: 0.1,
-    shadowRadius: 4,
-    elevation: 3,
+    shadowOpacity: 0.15,
+    shadowRadius: 8,
+    elevation: 6,
+    borderWidth: 1,
+    borderColor: 'rgba(0,0,0,0.05)',
   },
   dealImageContainer: {
-    height: 100,
+    height: 120,
     justifyContent: 'center',
     alignItems: 'center',
     position: 'relative',
+    padding: 16,
   },
   dealImage: {
     fontSize: 40,
+  },
+  dealImageReal: {
+    width: 100,
+    height: 100,
+    borderRadius: 12,
   },
   discountBadge: {
     position: 'absolute',
@@ -344,8 +369,8 @@ bannerImage: {
     fontWeight: 'bold',
   },
   dealInfo: {
-    padding: 16, // Increased from 12 to 16 for more space
-    minHeight: 80, // Add minimum height to make the bottom section more prominent
+    padding: 16,
+    minHeight: 70,
   },
   dealTitle: {
     fontSize: 14,
@@ -379,11 +404,13 @@ bannerImage: {
     shadowColor: '#000',
     shadowOffset: {
       width: 0,
-      height: 2,
+      height: 4,
     },
     shadowOpacity: 0.1,
-    shadowRadius: 4,
-    elevation: 3,
+    shadowRadius: 8,
+    elevation: 6,
+    borderWidth: 1,
+    borderColor: 'rgba(0,0,0,0.05)',
   },
   quickActionText: {
     marginTop: 8,

@@ -40,10 +40,21 @@ function MainScreen() {
                 <View style={[styles.headerBG, { backgroundColor: colors.surface }]}>
                     {/* ปุ่ม Back & Favorite */}
                     <View style={[styles.headerBar, { paddingTop: insets.top + 10 }]}>
-                        <TouchableOpacity onPress={handleBack} style={styles.iconBtn}>
+                        <TouchableOpacity 
+                            onPress={handleBack} 
+                            style={[styles.iconBtn, { backgroundColor: colors.background }]}
+                            activeOpacity={0.8}
+                        >
                             <Ionicons name="arrow-back" size={24} color={colors.text} />
                         </TouchableOpacity>
-                        <TouchableOpacity onPress={handleFavorite} style={styles.iconBtn}>
+                        <View style={styles.headerTitle}>
+                            <Text style={[styles.headerTitleText, { color: colors.text }]}>Product Details</Text>
+                        </View>
+                        <TouchableOpacity 
+                            onPress={handleFavorite} 
+                            style={[styles.iconBtn, { backgroundColor: colors.background }]}
+                            activeOpacity={0.8}
+                        >
                             <Ionicons name="heart-outline" size={24} color={colors.text} />
                         </TouchableOpacity>
                     </View>
@@ -200,7 +211,7 @@ function MainScreen() {
     );
 }
 
-export default function AppsScreen() {
+export default function ProductDetailScreen() {
     return (
         <SafeAreaProvider>
             <MainScreen />
@@ -219,10 +230,28 @@ const styles = StyleSheet.create({
     headerBar: {
         flexDirection: 'row',
         justifyContent: 'space-between',
+        alignItems: 'center',
         paddingHorizontal: 16,
-        marginBottom: 16,
+        marginBottom: 24,
     },
-    iconBtn: { padding: 8 },
+    headerTitle: {
+        flex: 1,
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
+    headerTitleText: {
+        fontSize: 18,
+        fontWeight: 'bold',
+    },
+    iconBtn: { 
+        padding: 12,
+        borderRadius: 12,
+        shadowColor: '#000',
+        shadowOffset: { width: 0, height: 3 },
+        shadowOpacity: 0.15,
+        shadowRadius: 6,
+        elevation: 6,
+    },
 
     // 🔹 Row: รูปซ้าย + ข้อความขวา
     headerContent: {
@@ -232,12 +261,13 @@ const styles = StyleSheet.create({
     },
     productImageContainer: {
         shadowColor: '#000',
-        shadowOffset: { width: 0, height: 4 },
-        shadowOpacity: 0.3,
-        shadowRadius: 8,
-        elevation: 8,
+        shadowOffset: { width: 0, height: 6 },
+        shadowOpacity: 0.25,
+        shadowRadius: 12,
+        elevation: 10,
         borderRadius: 16,
         marginRight: 16,
+        backgroundColor: '#fff',
     },
     productImage: {
         width: 120,
@@ -283,13 +313,15 @@ const styles = StyleSheet.create({
     card: {
         padding: 20,
         marginHorizontal: 16,
-        marginTop: 16,
+        marginTop: 20,
         borderRadius: 16,
         shadowColor: '#000',
-        shadowOffset: { width: 0, height: 2 },
-        shadowOpacity: 0.1,
-        shadowRadius: 8,
-        elevation: 4,
+        shadowOffset: { width: 0, height: 4 },
+        shadowOpacity: 0.15,
+        shadowRadius: 12,
+        elevation: 8,
+        borderWidth: 1,
+        borderColor: 'rgba(0,0,0,0.05)',
     },
     row: { flexDirection: 'row', alignItems: 'center', marginBottom: 12 },
     smallImageContainer: {
@@ -412,20 +444,20 @@ const styles = StyleSheet.create({
         padding: 16,
         borderTopWidth: 1,
         shadowColor: '#000',
-        shadowOffset: { width: 0, height: -2 },
-        shadowOpacity: 0.1,
-        shadowRadius: 8,
-        elevation: 8,
+        shadowOffset: { width: 0, height: -4 },
+        shadowOpacity: 0.15,
+        shadowRadius: 10,
+        elevation: 12,
     },
     cartBtn: {
         padding: 12,
         borderRadius: 12,
         position: 'relative',
         shadowColor: '#000',
-        shadowOffset: { width: 0, height: 2 },
-        shadowOpacity: 0.1,
-        shadowRadius: 4,
-        elevation: 3,
+        shadowOffset: { width: 0, height: 3 },
+        shadowOpacity: 0.2,
+        shadowRadius: 6,
+        elevation: 6,
     },
     cartBadge: {
         position: 'absolute',
@@ -455,10 +487,10 @@ const styles = StyleSheet.create({
         borderRadius: 12,
         alignItems: 'center',
         shadowColor: '#000',
-        shadowOffset: { width: 0, height: 2 },
-        shadowOpacity: 0.2,
-        shadowRadius: 4,
-        elevation: 4,
+        shadowOffset: { width: 0, height: 4 },
+        shadowOpacity: 0.25,
+        shadowRadius: 8,
+        elevation: 8,
     },
     buyBtn: {
         flex: 1,
@@ -466,10 +498,10 @@ const styles = StyleSheet.create({
         borderRadius: 12,
         alignItems: 'center',
         shadowColor: '#000',
-        shadowOffset: { width: 0, height: 2 },
-        shadowOpacity: 0.2,
-        shadowRadius: 4,
-        elevation: 4,
+        shadowOffset: { width: 0, height: 4 },
+        shadowOpacity: 0.25,
+        shadowRadius: 8,
+        elevation: 8,
     },
     btnText: { color: '#fff', fontWeight: 'bold', fontSize: 16 },
 });

@@ -4,6 +4,7 @@ import { Ionicons } from '@expo/vector-icons';
 import { router } from 'expo-router';
 import React, { useState } from 'react';
 import {
+  Image,
   KeyboardAvoidingView,
   Platform,
   SafeAreaView,
@@ -48,23 +49,25 @@ export default function AuthScreen() {
         >
           {/* Logo Section */}
           <View style={styles.logoContainer}>
-            <View style={[styles.logoPlaceholder, { backgroundColor: colors.primary }]}>
-              <Ionicons name="game-controller" size={40} color="white" />
+            <View style={styles.logoPlaceholder}>
+              <Image
+                source={{
+                  uri: 'https://play-lh.googleusercontent.com/YPGRQbrCO0REhttd7T3aFa6_ChyCJ-fQQeySY6UyH7YCRDZZxq2ww1spAEMebWQgOKk'
+                }}
+                style={styles.logoImage}
+                resizeMode="contain"
+              />
             </View>
-            <Text style={[styles.appTitle, { color: colors.text }]}>G2A</Text>
-            <Text style={[styles.subtitle, { color: colors.placeholder }]}>
-              Your gateway to gaming
+            <Text style={[styles.welcomeTitle, { color: colors.text }]}>
+              Welcome Back
+            </Text>
+            <Text style={[styles.welcomeSubtitle, { color: colors.placeholder }]}>
+              Sign in to start gaming
             </Text>
           </View>
 
           {/* Form Section */}
           <View style={styles.formContainer}>
-            <Text style={[styles.formTitle, { color: colors.text }]}>
-              {isLogin ? 'Welcome Back' : 'Create Account'}
-            </Text>
-            <Text style={[styles.formSubtitle, { color: colors.placeholder }]}>
-              {isLogin ? 'Sign in to continue' : 'Join the gaming community'}
-            </Text>
 
             {/* Email Input */}
             <View style={[styles.inputContainer, { backgroundColor: colors.surface, borderColor: colors.border }]}>
@@ -144,12 +147,12 @@ export default function AuthScreen() {
             </View>
 
             <View style={styles.socialButtons}>
-              <TouchableOpacity style={[styles.socialButton, { backgroundColor: colors.surface, borderColor: colors.border }]}>
+              <TouchableOpacity style={[styles.socialButton, { backgroundColor: '#30383B' }]}>
                 <Ionicons name="logo-google" size={24} color="#DB4437" />
                 <Text style={[styles.socialButtonText, { color: colors.text }]}>Google</Text>
               </TouchableOpacity>
 
-              <TouchableOpacity style={[styles.socialButton, { backgroundColor: colors.surface, borderColor: colors.border }]}>
+              <TouchableOpacity style={[styles.socialButton, { backgroundColor: '#30383B'}]}>
                 <Ionicons name="logo-apple" size={24} color={colors.text} />
                 <Text style={[styles.socialButtonText, { color: colors.text }]}>Apple</Text>
               </TouchableOpacity>
@@ -184,19 +187,38 @@ const styles = StyleSheet.create({
     flexGrow: 1,
     justifyContent: 'center',
     paddingHorizontal: 24,
-    paddingVertical: 32,
+    paddingVertical: 20,
+    minHeight: '100%',
   },
   logoContainer: {
     alignItems: 'center',
-    marginBottom: 48,
+    justifyContent: 'center',
+    paddingTop: 30,
   },
   logoPlaceholder: {
-    width: 80,
-    height: 80,
-    borderRadius: 40,
+    width: 140,
+    height: 140,
+    borderRadius: 25,
     justifyContent: 'center',
     alignItems: 'center',
-    marginBottom: 16,
+    overflow: 'hidden',
+    alignSelf: 'center',
+  },
+  logoImage: {
+    width: '100%',
+    height: '100%',
+  },
+  welcomeTitle: {
+    fontSize: 28,
+    fontWeight: 'bold',
+    textAlign: 'center',
+    marginTop: 20,
+    marginBottom: 8,
+  },
+  welcomeSubtitle: {
+    fontSize: 16,
+    textAlign: 'center',
+    marginBottom: 10,
   },
   appTitle: {
     fontSize: 32,
@@ -209,6 +231,8 @@ const styles = StyleSheet.create({
   },
   formContainer: {
     flex: 1,
+    justifyContent: 'center',
+    paddingVertical: 20,
   },
   formTitle: {
     fontSize: 28,
@@ -227,8 +251,8 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderRadius: 16,
     paddingHorizontal: 16,
-    paddingVertical: 16,
-    marginBottom: 16,
+    paddingVertical: 18,
+    marginBottom: 20,
   },
   inputIcon: {
     marginRight: 12,
@@ -247,9 +271,10 @@ const styles = StyleSheet.create({
   },
   authButton: {
     borderRadius: 16,
-    paddingVertical: 18,
+    paddingVertical: 20,
     alignItems: 'center',
-    marginBottom: 32,
+    marginBottom: 40,
+    marginTop: 10,
     shadowColor: '#000',
     shadowOffset: {
       width: 0,

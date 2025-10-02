@@ -20,7 +20,7 @@ export default function TabLayout() {
         tabBarStyle: Platform.select({
           ios: {
             position: 'absolute',
-            backgroundColor: '#30383B',
+            backgroundColor: '#FFFFFF',
             borderTopWidth: 0,
             bottom: 30,
             alignSelf: 'center',
@@ -30,10 +30,15 @@ export default function TabLayout() {
             borderRadius: 30, 
             paddingTop: 8,
             paddingBottom: 8,
+            shadowColor: '#000',
+            shadowOffset: { width: 0, height: 2 },
+            shadowOpacity: 0.1,
+            shadowRadius: 8,
+            elevation: 8,
           },
           default: {
             position: 'absolute',
-            backgroundColor: '#30383B',
+            backgroundColor: '#FFFFFF',
             borderTopWidth: 0,
             bottom: 30, 
             alignSelf: 'center',
@@ -43,6 +48,11 @@ export default function TabLayout() {
             borderRadius: 30, 
             paddingTop: 10,
             paddingBottom: 8,
+            shadowColor: '#000',
+            shadowOffset: { width: 0, height: 2 },
+            shadowOpacity: 0.1,
+            shadowRadius: 8,
+            elevation: 8,
           },
         }),
       }}>
@@ -96,6 +106,12 @@ export default function TabLayout() {
               color={color} 
             />
           ),
+        }}
+      />
+      <Tabs.Screen
+        name="ProductDetail"
+        options={{
+          href: null, // ซ่อนจาก tab bar
         }}
       />
     </Tabs>

@@ -21,7 +21,7 @@ export default function CartScreen() {
         <Text style={[styles.title, { color: colors.text }]}>รายการสินค้าที่ซื้อ</Text>
         
         {/* กล่องที่ 1: รายการสินค้า */}
-        <View style={[styles.box, { backgroundColor: '#22282A', borderColor: colors.tabIconDefault }]}>
+        <View style={[styles.box, { backgroundColor: colors.surface, borderColor: colors.border }]}>
           <Text style={[styles.boxTitle, { color: colors.text }]}>รายการสินค้า</Text>
           <View style={styles.totalRow}>
             <View style={styles.productItem}>
@@ -34,17 +34,17 @@ export default function CartScreen() {
                   />
                 </View>
                 <View style={styles.productDetails}>
-                  <Text style={[styles.productName, { color: '#FFFFFF' }]}>Google Play Gift Card 100 USD US</Text>
-                  <Text style={[styles.productQuantity, { color: '#CCCCCC' }]}>×1</Text>
+                  <Text style={[styles.productName, { color: colors.text }]}>Google Play Gift Card 100 USD US</Text>
+                  <Text style={[styles.productQuantity, { color: colors.placeholder }]}>×1</Text>
                 </View>
               </View>
-              <Text style={[styles.productPrice, { color: '#00BBFD' }]}>฿3,398.13</Text>
+              <Text style={[styles.productPrice, { color: colors.primary }]}>฿3,398.13</Text>
             </View>
           </View>
         </View>
 
         {/* กล่องที่ 2: รายละเอียดก่อนชำระเงิน */}
-        <View style={[styles.box, { backgroundColor: '#30383B', borderColor: colors.tabIconDefault }]}>
+        <View style={[styles.box, { backgroundColor: colors.surface, borderColor: colors.border }]}>
           <Text style={[styles.boxTitle, { color: colors.text }]}>รายละเอียดก่อนชำระเงิน</Text>
           <View style={styles.detailRow}>
             <Text style={[styles.detailLabel, { color: colors.text }]}>รวมก่อนลดราคา</Text>
@@ -52,19 +52,24 @@ export default function CartScreen() {
           </View>
           <View style={styles.detailRow}>
             <Text style={[styles.detailLabel, { color: colors.text }]}>ส่วนลด</Text>
-            <Text style={[styles.detailValue, { color: '#00BBFD' }]}>฿0.00</Text>
+            <Text style={[styles.detailValue, { color: colors.success }]}>฿0.00</Text>
+          </View>
+          <View style={[styles.divider, { backgroundColor: colors.border }]}></View>
+          <View style={styles.detailRow}>
+            <Text style={[styles.totalLabel, { color: colors.text }]}>ยอดรวมทั้งสิ้น</Text>
+            <Text style={[styles.totalValue, { color: colors.primary }]}>฿3,398.13</Text>
           </View>
         </View>
 
         {/* กล่องที่ 3: การจ่ายเงิน */}
-        <View style={[styles.box, { backgroundColor: '#30383B', borderColor: colors.tabIconDefault }]}>
+        <View style={[styles.box, { backgroundColor: colors.surface, borderColor: colors.border }]}>
           <View style={styles.paymentRow}>
             <View style={styles.totalAmount}>
-              <Text style={[styles.detailValue, { color: '#00BBFD' }]}>฿3,398.13</Text>
-              <Text style={[styles.totalAmountLabel, { color: colors.tabIconDefault }]}>G2A Credits 00,000 </Text>
+              <Text style={[styles.totalAmountLabel, { color: colors.placeholder }]}>G2A Credits Available: 0</Text>
+              <Text style={[styles.totalAmountValue, { color: colors.primary }]}>฿3,398.13</Text>
             </View>
             <TouchableOpacity 
-              style={styles.payButton}
+              style={[styles.payButton, { backgroundColor: colors.primary, shadowColor: colors.primary }]}
               activeOpacity={0.8}
             >
               <Text style={styles.payButtonText}>จ่ายตอนนี้</Text>
@@ -93,14 +98,15 @@ const styles = StyleSheet.create({
     textAlign: 'left',
   },
   box: {
-    borderRadius: 12,
-    padding: 16,
+    borderRadius: 16,
+    padding: 20,
     marginBottom: 16,
     shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.1,
-    shadowRadius: 4,
-    elevation: 3,
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.15,
+    shadowRadius: 8,
+    elevation: 6,
+    borderWidth: 1,
   },
   boxTitle: {
     fontSize: 18,
@@ -131,16 +137,20 @@ const styles = StyleSheet.create({
   totalRow: {
     borderTopWidth: 1,
     borderTopColor: '#E0E0E0',
-    marginTop: 8,
-    paddingTop: 12,
+    marginTop: 12,
+    paddingTop: 16,
+  },
+  divider: {
+    height: 1,
+    marginVertical: 12,
   },
   totalLabel: {
     fontWeight: 'bold',
-    fontSize: 17,
+    fontSize: 18,
   },
   totalValue: {
     fontWeight: 'bold',
-    fontSize: 17,
+    fontSize: 20,
   },
   paymentRow: {
     flexDirection: 'row',
@@ -155,15 +165,21 @@ const styles = StyleSheet.create({
     marginBottom: 4,
   },
   totalAmountValue: {
-    fontSize: 20,
+    fontSize: 24,
     fontWeight: 'bold',
   },
   payButton: {
-    backgroundColor: '#007AFF',
-    paddingHorizontal: 30,
-    paddingVertical: 12,
-    borderRadius: 20,
+    paddingHorizontal: 32,
+    paddingVertical: 14,
+    borderRadius: 12,
     marginLeft: 16,
+    shadowOffset: {
+      width: 0,
+      height: 4,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 6,
+    elevation: 6,
   },
   payButtonText: {
     color: '#FFFFFF',
@@ -182,14 +198,19 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   productIcon: {
-    width: 40,
-    height: 40,
-    borderRadius: 4,
+    width: 50,
+    height: 50,
+    borderRadius: 8,
     backgroundColor: '#4A5568',
     justifyContent: 'center',
     alignItems: 'center',
-    marginRight: 12,
+    marginRight: 16,
     overflow: 'hidden',
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 4,
+    elevation: 3,
   },
   productIconImage: {
     width: '100%',
