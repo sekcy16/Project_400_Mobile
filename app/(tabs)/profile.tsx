@@ -179,7 +179,7 @@ const styles = StyleSheet.create({
   container: { flex: 1 },
   scroll: {
     paddingHorizontal: 14,
-    paddingTop: 50,
+    paddingTop: 20,
     paddingBottom: 100, // เพิ่ม padding ด้านล่างเพื่อไม่ให้ Nav Bar ทับ
   },
 

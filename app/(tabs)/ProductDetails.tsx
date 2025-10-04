@@ -1,6 +1,7 @@
 import { Colors } from '@/constants/Colors';
 import { useColorScheme } from '@/hooks/useColorScheme';
 import { Ionicons } from '@expo/vector-icons';
+import { useLocalSearchParams, useRouter } from 'expo-router';
 import React from 'react';
 import {
     Image,
@@ -16,13 +17,87 @@ import {
     useSafeAreaInsets,
 } from 'react-native-safe-area-context';
 
+// Helper functions for product descriptions and features
+const getProductDescription = (category: string, title: string): string => {
+    if (title.toLowerCase().includes('windows 11')) {
+        return "Windows 11 Pro is an operating system for businesses and power users, offering all Home edition features plus enhanced security, management tools, and virtualization capabilities like BitLocker and Hyper-V.";
+    } else if (category === 'Antivirus') {
+        return "Advanced security solution providing comprehensive protection against malware, viruses, and cyber threats with real-time monitoring and automatic updates.";
+    } else if (category === 'Creative Software') {
+        return "Professional creative suite offering industry-leading tools for design, video editing, photography, and digital content creation.";
+    } else if (category === 'Office Software') {
+        return "Complete productivity suite with word processing, spreadsheets, presentations, and collaboration tools for business and personal use.";
+    } else if (category === 'Audio Software') {
+        return "Professional audio software providing advanced voice modification and audio enhancement capabilities for gaming and content creation.";
+    } else {
+        return "Professional software solution designed to enhance productivity and provide advanced features for users.";
+    }
+};
+
+const getProductFeatures = (category: string): string[] => {
+    if (category === 'Software License') {
+        return [
+            "Enhanced Security Features",
+            "Business Management Tools", 
+            "Virtualization Support",
+            "AI-Powered Assistance"
+        ];
+    } else if (category === 'Antivirus') {
+        return [
+            "Real-time Protection",
+            "Malware Detection",
+            "Firewall Security",
+            "Automatic Updates"
+        ];
+    } else if (category === 'Creative Software') {
+        return [
+            "Professional Design Tools",
+            "Video Editing Suite",
+            "Cloud Storage",
+            "Creative Templates"
+        ];
+    } else if (category === 'Office Software') {
+        return [
+            "Word Processing",
+            "Spreadsheet Tools",
+            "Presentation Suite",
+            "Cloud Integration"
+        ];
+    } else if (category === 'Audio Software') {
+        return [
+            "Voice Modulation",
+            "Real-time Effects",
+            "Background Noise Removal",
+            "Multiple Voice Presets"
+        ];
+    } else {
+        return [
+            "Professional Features",
+            "Easy to Use Interface",
+            "Regular Updates",
+            "Customer Support"
+        ];
+    }
+};
+
 function MainScreen() {
     const insets = useSafeAreaInsets();
     const colorScheme = useColorScheme();
     const colors = Colors[colorScheme ?? 'light'];
+    const router = useRouter();
+    const params = useLocalSearchParams();
+
+    // Use parameters from navigation or default values
+    const productData = {
+        id: (params.productId as string) || "1",
+        title: (params.title as string) || "Windows 11 Pro",
+        image: (params.image as string) || "https://cdn.builder.io/api/v1/image/assets%2F6bd562c790ff467292987e3133ef2616%2Fc517a615d62f4fb696d03dbbcbeed2d6",
+        price: params.price ? parseInt(params.price as string) : 6900,
+        category: (params.category as string) || "Software License"
+    };
 
     const handleBack = () => {
-        console.log('Back pressed');
+        router.push('/(tabs)/Apps');
     };
 
     const handleFavorite = () => {
@@ -38,24 +113,16 @@ function MainScreen() {
                 ]}>
                 {/* 🔹 Header (BG + ปุ่ม + รูป + ข้อความ) */}
                 <View style={[styles.headerBG, { backgroundColor: colors.surface }]}>
-                    {/* ปุ่ม Back & Favorite */}
-                    <View style={[styles.headerBar, { paddingTop: insets.top + 10 }]}>
-                        <TouchableOpacity 
-                            onPress={handleBack} 
-                            style={[styles.iconBtn, { backgroundColor: colors.background }]}
-                            activeOpacity={0.8}
-                        >
-                            <Ionicons name="arrow-back" size={24} color={colors.text} />
+                    {/* Header */}
+                    <View style={styles.header}>
+                        <TouchableOpacity onPress={handleBack} style={styles.iconBtn}>
+                            <Ionicons name="chevron-back" size={26} color="#2C3E50" />
                         </TouchableOpacity>
-                        <View style={styles.headerTitle}>
-                            <Text style={[styles.headerTitleText, { color: colors.text }]}>Product Details</Text>
-                        </View>
-                        <TouchableOpacity 
-                            onPress={handleFavorite} 
-                            style={[styles.iconBtn, { backgroundColor: colors.background }]}
-                            activeOpacity={0.8}
-                        >
-                            <Ionicons name="heart-outline" size={24} color={colors.text} />
+
+                        <Text style={styles.headerTitle}>Product Details</Text>
+
+                        <TouchableOpacity onPress={handleFavorite} style={styles.iconBtn}>
+                            <Ionicons name="heart-outline" size={22} color="#2C3E50" />
                         </TouchableOpacity>
                     </View>
 
@@ -64,14 +131,14 @@ function MainScreen() {
                         <View style={styles.productImageContainer}>
                             <Image
                                 source={{
-                                    uri: 'https://cdn.builder.io/api/v1/image/assets%2F6bd562c790ff467292987e3133ef2616%2Fc517a615d62f4fb696d03dbbcbeed2d6',
+                                    uri: productData.image,
                                 }}
                                 style={styles.productImage}
                             />
                         </View>
 
                         <View style={styles.headerInfo}>
-                            <Text style={[styles.title, { color: colors.text }]}>Windows 11 Pro</Text>
+                            <Text style={[styles.title, { color: colors.text }]}>{productData.title}</Text>
                             <View style={styles.ratingContainer}>
                                 <View style={styles.starsContainer}>
                                     <Ionicons name="star" size={16} color={colors.warning} />
@@ -82,7 +149,7 @@ function MainScreen() {
                                 </View>
                                 <Text style={[styles.ratingText, { color: colors.placeholder }]}>(4.8)</Text>
                             </View>
-                            <Text style={[styles.category, { color: colors.secondary }]}>Software License</Text>
+                            <Text style={[styles.category, { color: colors.secondary }]}>{productData.category}</Text>
                             <View style={styles.availabilityContainer}>
                                 <Ionicons name="checkmark-circle" size={16} color={colors.success} />
                                 <Text style={[styles.availability, { color: colors.success }]}>In Stock</Text>
@@ -98,14 +165,14 @@ function MainScreen() {
                             <View style={styles.smallImageContainer}>
                                 <Image
                                     source={{
-                                        uri: 'https://cdn.builder.io/api/v1/image/assets%2F6bd562c790ff467292987e3133ef2616%2Fc517a615d62f4fb696d03dbbcbeed2d6',
+                                        uri: productData.image,
                                     }}
                                     style={styles.smallImage}
                                 />
                             </View>
                             <View>
-                                <Text style={[styles.subtitle, { color: colors.text }]}>Windows 11 Pro</Text>
-                                <Text style={[styles.productCode, { color: colors.placeholder }]}>Product Code: WIN11PRO</Text>
+                                <Text style={[styles.subtitle, { color: colors.text }]}>{productData.title}</Text>
+                                <Text style={[styles.productCode, { color: colors.placeholder }]}>Product Code: {productData.id.toUpperCase()}</Text>
                             </View>
                         </View>
                         <Text style={[styles.qty, { color: colors.placeholder }]}>×1</Text>
@@ -115,17 +182,17 @@ function MainScreen() {
 
                     <View style={styles.rowBetween}>
                         <Text style={[styles.label, { color: colors.text }]}>Subtotal</Text>
-                        <Text style={[styles.priceRegular, { color: colors.text }]}>฿7,400.00</Text>
+                        <Text style={[styles.priceRegular, { color: colors.text }]}>฿{productData.price.toLocaleString()}.00</Text>
                     </View>
                     
                     <View style={styles.rowBetween}>
                         <Text style={[styles.discountLabel, { color: colors.success }]}>Discount (7%)</Text>
-                        <Text style={[styles.discountValue, { color: colors.success }]}>-฿500.00</Text>
+                        <Text style={[styles.discountValue, { color: colors.success }]}>-฿{Math.round(productData.price * 0.07).toLocaleString()}.00</Text>
                     </View>
 
                     <View style={[styles.rowBetween, styles.totalRow]}>
                         <Text style={[styles.totalLabel, { color: colors.text }]}>Total</Text>
-                        <Text style={[styles.price, { color: colors.primary }]}>฿6,900.00</Text>
+                        <Text style={[styles.price, { color: colors.primary }]}>฿{Math.round(productData.price * 0.93).toLocaleString()}.00</Text>
                     </View>
 
                     <View style={styles.creditsInfo}>
@@ -158,33 +225,20 @@ function MainScreen() {
                     <View style={styles.sectionHeader}>
                         <View style={styles.sectionTitleContainer}>
                             <Ionicons name="document-text-outline" size={20} color={colors.text} />
-                            <Text style={[styles.sectionTitle, { color: colors.text }]}>About Windows 11 Pro</Text>
+                            <Text style={[styles.sectionTitle, { color: colors.text }]}>About {productData.title}</Text>
                         </View>
                     </View>
                     <Text style={[styles.aboutText, { color: colors.placeholder }]}>
-                        Windows 11 Pro is an operating system for businesses and power
-                        users, offering all Home edition features plus enhanced security,
-                        management tools, and virtualization capabilities like BitLocker and
-                        Hyper-V.
+                        {getProductDescription(productData.category, productData.title)}
                     </Text>
                     
                     <View style={styles.featuresList}>
-                        <View style={styles.featureItem}>
-                            <Ionicons name="checkmark" size={16} color={colors.success} />
-                            <Text style={[styles.featureText, { color: colors.placeholder }]}>Enhanced Security Features</Text>
-                        </View>
-                        <View style={styles.featureItem}>
-                            <Ionicons name="checkmark" size={16} color={colors.success} />
-                            <Text style={[styles.featureText, { color: colors.placeholder }]}>Business Management Tools</Text>
-                        </View>
-                        <View style={styles.featureItem}>
-                            <Ionicons name="checkmark" size={16} color={colors.success} />
-                            <Text style={[styles.featureText, { color: colors.placeholder }]}>Virtualization Support</Text>
-                        </View>
-                        <View style={styles.featureItem}>
-                            <Ionicons name="checkmark" size={16} color={colors.success} />
-                            <Text style={[styles.featureText, { color: colors.placeholder }]}>AI-Powered Assistance</Text>
-                        </View>
+                        {getProductFeatures(productData.category).map((feature, index) => (
+                            <View key={index} style={styles.featureItem}>
+                                <Ionicons name="checkmark" size={16} color={colors.success} />
+                                <Text style={[styles.featureText, { color: colors.placeholder }]}>{feature}</Text>
+                            </View>
+                        ))}
                     </View>
                 </View>
             </ScrollView>
@@ -200,10 +254,10 @@ function MainScreen() {
                 
                 <View style={styles.actionButtons}>
                     <TouchableOpacity style={[styles.addBtn, { backgroundColor: colors.warning }]}>
-                        <Text style={styles.btnText}>ADD TO CART</Text>
+                        <Text style={styles.btnText}>Add to Cart</Text>
                     </TouchableOpacity>
                     <TouchableOpacity style={[styles.buyBtn, { backgroundColor: colors.primary }]}>
-                        <Text style={styles.btnText}>BUY NOW</Text>
+                        <Text style={styles.btnText}>Buy Now</Text>
                     </TouchableOpacity>
                 </View>
             </View>
@@ -211,7 +265,7 @@ function MainScreen() {
     );
 }
 
-export default function ProductDetailScreen() {
+export default function AppsScreen() {
     return (
         <SafeAreaProvider>
             <MainScreen />
@@ -227,47 +281,61 @@ const styles = StyleSheet.create({
     headerBG: {
         paddingBottom: 20,
     },
+    header: {
+        marginTop: 10,
+        paddingHorizontal: 16,
+        paddingVertical: 12,
+        flexDirection: "row",
+        alignItems: "center",
+        justifyContent: "space-between",
+        backgroundColor: "#FFFFFF",
+        shadowColor: "#000",
+        shadowOffset: { width: 0, height: 2 },
+        shadowOpacity: 0.05,
+        shadowRadius: 4,
+        elevation: 3,
+    },
+    headerTitle: { 
+        color: "#2C3E50", 
+        fontSize: 18, 
+        fontWeight: "700",
+        letterSpacing: 0.5,
+    },
     headerBar: {
         flexDirection: 'row',
         justifyContent: 'space-between',
-        alignItems: 'center',
         paddingHorizontal: 16,
-        marginBottom: 24,
+        marginBottom: 16,
     },
-    headerTitle: {
-        flex: 1,
-        alignItems: 'center',
-        justifyContent: 'center',
-    },
-    headerTitleText: {
-        fontSize: 18,
-        fontWeight: 'bold',
-    },
-    iconBtn: { 
-        padding: 12,
+    iconBtn: {
+        width: 42, 
+        height: 38, 
+        alignItems: "center", 
+        justifyContent: "center", 
         borderRadius: 12,
-        shadowColor: '#000',
-        shadowOffset: { width: 0, height: 3 },
-        shadowOpacity: 0.15,
-        shadowRadius: 6,
-        elevation: 6,
+        backgroundColor: "#F8F9FA",
+        shadowColor: "#000",
+        shadowOffset: { width: 0, height: 1 },
+        shadowOpacity: 0.1,
+        shadowRadius: 2,
+        elevation: 2,
     },
 
     // 🔹 Row: รูปซ้าย + ข้อความขวา
     headerContent: {
+        paddingTop: 16,
         flexDirection: 'row',
         alignItems: 'center',
         paddingHorizontal: 16,
     },
     productImageContainer: {
         shadowColor: '#000',
-        shadowOffset: { width: 0, height: 6 },
-        shadowOpacity: 0.25,
-        shadowRadius: 12,
-        elevation: 10,
+        shadowOffset: { width: 0, height: 4 },
+        shadowOpacity: 0.3,
+        shadowRadius: 8,
+        elevation: 8,
         borderRadius: 16,
         marginRight: 16,
-        backgroundColor: '#fff',
     },
     productImage: {
         width: 120,
@@ -313,15 +381,13 @@ const styles = StyleSheet.create({
     card: {
         padding: 20,
         marginHorizontal: 16,
-        marginTop: 20,
+        marginTop: 16,
         borderRadius: 16,
         shadowColor: '#000',
-        shadowOffset: { width: 0, height: 4 },
-        shadowOpacity: 0.15,
-        shadowRadius: 12,
-        elevation: 8,
-        borderWidth: 1,
-        borderColor: 'rgba(0,0,0,0.05)',
+        shadowOffset: { width: 0, height: 2 },
+        shadowOpacity: 0.1,
+        shadowRadius: 8,
+        elevation: 4,
     },
     row: { flexDirection: 'row', alignItems: 'center', marginBottom: 12 },
     smallImageContainer: {
@@ -444,20 +510,20 @@ const styles = StyleSheet.create({
         padding: 16,
         borderTopWidth: 1,
         shadowColor: '#000',
-        shadowOffset: { width: 0, height: -4 },
-        shadowOpacity: 0.15,
-        shadowRadius: 10,
-        elevation: 12,
+        shadowOffset: { width: 0, height: -2 },
+        shadowOpacity: 0.1,
+        shadowRadius: 8,
+        elevation: 8,
     },
     cartBtn: {
         padding: 12,
         borderRadius: 12,
         position: 'relative',
         shadowColor: '#000',
-        shadowOffset: { width: 0, height: 3 },
-        shadowOpacity: 0.2,
-        shadowRadius: 6,
-        elevation: 6,
+        shadowOffset: { width: 0, height: 2 },
+        shadowOpacity: 0.1,
+        shadowRadius: 4,
+        elevation: 3,
     },
     cartBadge: {
         position: 'absolute',
@@ -487,10 +553,10 @@ const styles = StyleSheet.create({
         borderRadius: 12,
         alignItems: 'center',
         shadowColor: '#000',
-        shadowOffset: { width: 0, height: 4 },
-        shadowOpacity: 0.25,
-        shadowRadius: 8,
-        elevation: 8,
+        shadowOffset: { width: 0, height: 2 },
+        shadowOpacity: 0.2,
+        shadowRadius: 4,
+        elevation: 4,
     },
     buyBtn: {
         flex: 1,
@@ -498,10 +564,10 @@ const styles = StyleSheet.create({
         borderRadius: 12,
         alignItems: 'center',
         shadowColor: '#000',
-        shadowOffset: { width: 0, height: 4 },
-        shadowOpacity: 0.25,
-        shadowRadius: 8,
-        elevation: 8,
+        shadowOffset: { width: 0, height: 2 },
+        shadowOpacity: 0.2,
+        shadowRadius: 4,
+        elevation: 4,
     },
     btnText: { color: '#fff', fontWeight: 'bold', fontSize: 16 },
 });

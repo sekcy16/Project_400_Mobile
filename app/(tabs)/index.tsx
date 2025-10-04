@@ -1,6 +1,8 @@
+import SpecialDealsComponent from '@/components/SpecialDealsComponent';
 import { Colors } from '@/constants/Colors';
 import { useColorScheme } from '@/hooks/useColorScheme';
 import { Ionicons } from '@expo/vector-icons';
+import { router } from 'expo-router';
 import React from 'react';
 import {
   Dimensions,
@@ -23,15 +25,6 @@ interface CategoryItem {
   color: string;
 }
 
-interface DealItem {
-  id: string;
-  title: string;
-  price: string;
-  originalPrice?: string;
-  discount?: string;
-  image: string;
-}
-
 const categories: CategoryItem[] = [
   { id: '1', title: 'Game Cards', icon: 'game-controller', color: '#FF6B6B' },
   { id: '2', title: 'Gift Cards', icon: 'gift', color: '#4ECDC4' },
@@ -41,33 +34,6 @@ const categories: CategoryItem[] = [
   { id: '6', title: 'Music', icon: 'musical-notes', color: '#DDA0DD' },
   { id: '7', title: 'Game Top Up', icon: 'card', color: '#98D8C8' },
   { id: '8', title: 'Mobile Recharge', icon: 'phone-portrait', color: '#F7DC6F' },
-];
-
-const specialDeals: DealItem[] = [
-  {
-    id: '1',
-    title: 'PUBG Mobile UC',
-    price: '$9.99',
-    originalPrice: '$14.99',
-    discount: '33% OFF',
-    image: 'https://cdn.builder.io/api/v1/image/assets%2Fe12b532e063c4412a1a4def250f89020%2F635793a0d06e46e1bcbeed120aa23adf',
-  },
-  {
-    id: '2',
-    title: 'Steam Wallet',
-    price: '$19.99',
-    originalPrice: '$24.99',
-    discount: '20% OFF',
-    image: 'https://cdn.builder.io/api/v1/image/assets%2Fe12b532e063c4412a1a4def250f89020%2F635793a0d06e46e1bcbeed120aa23adf',
-  },
-  {
-    id: '3',
-    title: 'Google Play Gift',
-    price: '$24.99',
-    originalPrice: '$29.99',
-    discount: '17% OFF',
-    image: 'https://cdn.builder.io/api/v1/image/assets%2Fe12b532e063c4412a1a4def250f89020%2F635793a0d06e46e1bcbeed120aa23adf',
-  },
 ];
 
 export default function HomeScreen() {
@@ -86,40 +52,6 @@ export default function HomeScreen() {
       <Text style={[styles.categoryText, { color: colors.text }]} numberOfLines={2}>
         {item.title}
       </Text>
-    </TouchableOpacity>
-  );
-
-  const DealCard = ({ item }: { item: DealItem }) => (
-    <TouchableOpacity style={[styles.dealCard, { backgroundColor: colors.surface }]}>
-      <View style={styles.dealImageContainer}>
-        {item.image.startsWith('http') ? (
-          <Image
-            source={{ uri: item.image }}
-            style={styles.dealImageReal}
-            resizeMode="cover"
-          />
-        ) : (
-          <Text style={styles.dealImage}>{item.image}</Text>
-        )}
-        {item.discount && (
-          <View style={[styles.discountBadge, { backgroundColor: colors.primary }]}>
-            <Text style={styles.discountText}>{item.discount}</Text>
-          </View>
-        )}
-      </View>
-      <View style={styles.dealInfo}>
-        <Text style={[styles.dealTitle, { color: colors.text }]} numberOfLines={1}>
-          {item.title}
-        </Text>
-        <View style={styles.priceContainer}>
-          <Text style={[styles.dealPrice, { color: colors.primary }]}>{item.price}</Text>
-          {item.originalPrice && (
-            <Text style={[styles.originalPrice, { color: colors.placeholder }]}>
-              {item.originalPrice}
-            </Text>
-          )}
-        </View>
-      </View>
     </TouchableOpacity>
   );
 
@@ -167,21 +99,14 @@ export default function HomeScreen() {
         </View>
 
         {/* Special Deals */}
-        <View style={styles.section}>
-          <View style={styles.sectionHeader}>
-            <Text style={[styles.sectionTitle, { color: colors.text }]}>Special Deals</Text>
-            <TouchableOpacity>
-              <Text style={[styles.seeAllText, { color: colors.primary }]}>See All</Text>
-            </TouchableOpacity>
-          </View>
-          <ScrollView horizontal showsHorizontalScrollIndicator={false}>
-            <View style={styles.dealsContainer}>
-              {specialDeals.map((item) => (
-                <DealCard key={item.id} item={item} />
-              ))}
-            </View>
-          </ScrollView>
-        </View>
+        <SpecialDealsComponent 
+          title="Special Deals"
+          subtitle="Discover amazing deals and discounts on your favorite games!"
+          maxItems={5}
+          showNavigationButtons={false}
+          cardWidth={160}
+          onViewMore={() => router.push('/special-deals')}
+        />
 
         {/* Quick Actions */}
         <View style={styles.section}>
@@ -318,77 +243,6 @@ bannerImage: {
     fontSize: 12,
     textAlign: 'center',
     lineHeight: 16,
-  },
-  dealsContainer: {
-    flexDirection: 'row',
-    paddingLeft: 20,
-    marginBottom: 10,
-  },
-  dealCard: {
-    width: 160,
-    marginRight: 16,
-    borderRadius: 16,
-    overflow: 'hidden',
-    shadowColor: '#000',
-    shadowOffset: {
-      width: 0,
-      height: 4,
-    },
-    shadowOpacity: 0.15,
-    shadowRadius: 8,
-    elevation: 6,
-    borderWidth: 1,
-    borderColor: 'rgba(0,0,0,0.05)',
-  },
-  dealImageContainer: {
-    height: 120,
-    justifyContent: 'center',
-    alignItems: 'center',
-    position: 'relative',
-    padding: 16,
-  },
-  dealImage: {
-    fontSize: 40,
-  },
-  dealImageReal: {
-    width: 100,
-    height: 100,
-    borderRadius: 12,
-  },
-  discountBadge: {
-    position: 'absolute',
-    top: 8,
-    right: 8,
-    paddingHorizontal: 8,
-    paddingVertical: 4,
-    borderRadius: 12,
-  },
-  discountText: {
-    color: 'white',
-    fontSize: 10,
-    fontWeight: 'bold',
-  },
-  dealInfo: {
-    padding: 16,
-    minHeight: 70,
-  },
-  dealTitle: {
-    fontSize: 14,
-    fontWeight: '600',
-    marginBottom: 4,
-  },
-  priceContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-  },
-  dealPrice: {
-    fontSize: 16,
-    fontWeight: 'bold',
-  },
-  originalPrice: {
-    fontSize: 12,
-    textDecorationLine: 'line-through',
-    marginLeft: 8,
   },
   quickActions: {
     flexDirection: 'row',

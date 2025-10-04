@@ -10,6 +10,12 @@ export default function RootLayout() {
   const colorScheme = useColorScheme();
   const [loaded] = useFonts({
     SpaceMono: require('../assets/fonts/SpaceMono-Regular.ttf'),
+    // Noto Sans font family
+    'NotoSans-Regular': require('../assets/fonts/NotoSans-Regular.ttf'),
+    'NotoSans-Bold': require('../assets/fonts/NotoSans-Bold.ttf'),
+    'NotoSans-Medium': require('../assets/fonts/NotoSans-Medium.ttf'),
+    'NotoSans-SemiBold': require('../assets/fonts/NotoSans-SemiBold.ttf'),
+    'NotoSans-Light': require('../assets/fonts/NotoSans-Light.ttf'),
   });
 
   if (!loaded) {
@@ -22,6 +28,10 @@ export default function RootLayout() {
       <Stack>
         <Stack.Screen name="auth" options={{ headerShown: false }} />
         <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+        <Stack.Screen name="font-test" options={{ 
+          title: 'Font Test',
+          headerShown: true 
+        }} />
         <Stack.Screen name="+not-found" />
       </Stack>
       <StatusBar style="auto" />

@@ -109,9 +109,10 @@ export default function TabLayout() {
         }}
       />
       <Tabs.Screen
-        name="ProductDetail"
+        name="ProductDetails"
         options={{
           href: null, // ซ่อนจาก tab bar
+          tabBarStyle: { display: 'none' }, // บังคับซ่อน tab bar
         }}
       />
     </Tabs>

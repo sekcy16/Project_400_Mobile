@@ -1,4 +1,5 @@
 import { Colors } from '@/constants/Colors';
+import { Typography } from '@/constants/Typography';
 import { useColorScheme } from '@/hooks/useColorScheme';
 import { Ionicons } from '@expo/vector-icons';
 import { router } from 'expo-router';
@@ -147,12 +148,12 @@ export default function AuthScreen() {
             </View>
 
             <View style={styles.socialButtons}>
-              <TouchableOpacity style={[styles.socialButton, { backgroundColor: '#30383B' }]}>
+              <TouchableOpacity style={[styles.socialButton, { backgroundColor: colors.surface, borderColor: colors.border }]}>
                 <Ionicons name="logo-google" size={24} color="#DB4437" />
                 <Text style={[styles.socialButtonText, { color: colors.text }]}>Google</Text>
               </TouchableOpacity>
 
-              <TouchableOpacity style={[styles.socialButton, { backgroundColor: '#30383B'}]}>
+              <TouchableOpacity style={[styles.socialButton, { backgroundColor: colors.surface, borderColor: colors.border }]}>
                 <Ionicons name="logo-apple" size={24} color={colors.text} />
                 <Text style={[styles.socialButtonText, { color: colors.text }]}>Apple</Text>
               </TouchableOpacity>
@@ -209,14 +210,15 @@ const styles = StyleSheet.create({
     height: '100%',
   },
   welcomeTitle: {
-    fontSize: 28,
-    fontWeight: 'bold',
+    fontSize: Typography.fontSize.xxxl,
+    fontFamily: Typography.fontFamily.bold,
     textAlign: 'center',
     marginTop: 20,
     marginBottom: 8,
   },
   welcomeSubtitle: {
-    fontSize: 16,
+    fontSize: Typography.fontSize.lg,
+    fontFamily: Typography.fontFamily.regular,
     textAlign: 'center',
     marginBottom: 10,
   },
@@ -286,8 +288,8 @@ const styles = StyleSheet.create({
   },
   authButtonText: {
     color: 'white',
-    fontSize: 18,
-    fontWeight: 'bold',
+    fontSize: Typography.fontSize.xl,
+    fontFamily: Typography.fontFamily.bold,
   },
   socialContainer: {
     flexDirection: 'row',
@@ -312,15 +314,23 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
-    borderWidth: 1,
+    borderWidth: 1.5,
     borderRadius: 16,
     paddingVertical: 16,
     marginHorizontal: 8,
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.05,
+    shadowRadius: 3,
+    elevation: 2,
   },
   socialButtonText: {
     marginLeft: 8,
-    fontSize: 16,
-    fontWeight: '600',
+    fontSize: Typography.fontSize.lg,
+    fontFamily: Typography.fontFamily.semiBold,
   },
   toggleContainer: {
     flexDirection: 'row',
